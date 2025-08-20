@@ -2,7 +2,7 @@ import google.generativeai as genai
 import json
 import re
 import os
-from base_prompt import get_prompt_van, get_prompt_kh
+from base_prompt import get_prompt
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -68,7 +68,7 @@ def call_gemini_api(content):
     api_key = os.environ.get("GEMINI_API_KEY")
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-2.0-flash')
-    prompt = get_prompt_kh(content)
+    prompt = get_prompt(content)
     response = model.generate_content(prompt)
     try:
         part = response.candidates[0].content.parts[0]
