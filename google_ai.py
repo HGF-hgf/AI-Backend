@@ -2,7 +2,7 @@ import google.generativeai as genai
 import json
 import re
 import os
-from base_prompt import get_prompt
+from base_prompt import get_prompt_van, get_prompt_kh
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,7 +15,7 @@ def fix_json_with_gemini(broken_json_string):
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-2.5-pro')
     
     fix_prompt = f"""
     Bạn là chuyên gia sửa lỗi JSON.
@@ -67,8 +67,8 @@ def call_gemini_api(content):
     load_dotenv()
     api_key = os.environ.get("GEMINI_API_KEY")
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-2.0-flash')
-    prompt = get_prompt(content)
+    model = genai.GenerativeModel('gemini-2.5-pro')
+    prompt = get_prompt_van(content)
     response = model.generate_content(prompt)
     try:
         part = response.candidates[0].content.parts[0]
